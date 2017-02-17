@@ -198,7 +198,7 @@ class KDistance(OpenRTM_aist.DataFlowComponentBase):
 			
 			self._d_distance = self._DistanceIn.read()
 			
-			if(self._d_distance.data < 20):
+			if(self._d_distance.data < 30):
 				
 				self._d_vel2d.data.va = 0.0;
 				self._d_vel2d.data.vx = 0.0;
