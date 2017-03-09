@@ -69,7 +69,7 @@ class DistanceNum(OpenRTM_aist.DataFlowComponentBase):
 		
 		#vel_arg = [None] * ((len(RTC._d_TimedVelocity2D) - 4) / 2)
 		#self._d_vel = RTC.TimedVelocity2D(*vel_arg)
-		self._d_vel = RTC.TImedVelocity2D(RTC.Time(0,0),RTC.Velocity2D(0.0,0.0,0.0))	
+		self._d_vel = RTC.TimedVelocity2D(RTC.Time(0,0),RTC.Velocity2D(0.0,0.0,0.0))	
 		"""
 		"""
 		self._VelocityOut = OpenRTM_aist.OutPort("Velocity", self._d_vel)
@@ -202,7 +202,7 @@ class DistanceNum(OpenRTM_aist.DataFlowComponentBase):
 			
 			dis = self._d_distance.data
 			
-			if(dis > 30):
+			if(dis < 30):
 				
 				if(rand() == 0):
 					#Out Number 2 : turn right
@@ -214,7 +214,7 @@ class DistanceNum(OpenRTM_aist.DataFlowComponentBase):
 					self._d_vel.data.vy = 0.0
 					self._VelocityOut.write()
 				
-					time.sleep(0.5)
+					time.sleep(0.7)
 				
 				else:
 					#Out Number 3 : turn left
@@ -226,11 +226,16 @@ class DistanceNum(OpenRTM_aist.DataFlowComponentBase):
 					self._d_vel.data.vy = 0.0
 					self._VelocityOut.write()
 					
-					time.sleep(0.5)
+					time.sleep(0.7)
 
-				
-				
-				
+			else:
+				self._d_num.data = 1
+				self._NumberOut.write()
+				self._d_vel.data.va = 0.0
+				self._d_vel.data.vx = 0.2
+				self._d_vel.data.vy = 0.0
+					
+				self._VelocityOut.write()	
 
 		return RTC.RTC_OK
 	
